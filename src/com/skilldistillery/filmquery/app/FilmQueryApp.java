@@ -1,5 +1,6 @@
 package com.skilldistillery.filmquery.app;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 import com.skilldistillery.filmquery.database.DatabaseAccessor;
@@ -10,13 +11,17 @@ public class FilmQueryApp {
   
   DatabaseAccessor db = new DatabaseAccessorObject();
 
-  public static void main(String[] args) {
+	public FilmQueryApp() throws ClassNotFoundException {
+		  Class.forName("com.mysql.jdbc.Driver");
+		}
+  public static void main(String[] args) throws SQLException, ClassNotFoundException{
     FilmQueryApp app = new FilmQueryApp();
     app.test();
 //    app.launch();
   }
 
-  private void test() {
+
+  private void test() throws SQLException {
     Film film = db.findFilmById(1);
     System.out.println(film);
   }
