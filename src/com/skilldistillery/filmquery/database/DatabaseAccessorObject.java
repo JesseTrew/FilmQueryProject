@@ -15,6 +15,10 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 
 	private static final String URL = "jdbc:mysql://localhost:3306/sdvid?useSSL=false";
 
+	public DatabaseAccessorObject() throws ClassNotFoundException {
+		  Class.forName("com.mysql.jdbc.Driver");
+		}
+	
 	@Override
 	public Film findFilmById(int filmId) {
 		String user = "student";
@@ -24,7 +28,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		try {
 			Connection conn = DriverManager.getConnection(URL, user, pass);
 			String sqltext;
-			sqltext = "select * from film join language on film.language_id = language.id where film.id = ?;";
+			sqltext = "select * from film join language where film.id = ?;";
 
 			PreparedStatement stmt = conn.prepareStatement(sqltext);
 			stmt.setInt(1, filmId);
