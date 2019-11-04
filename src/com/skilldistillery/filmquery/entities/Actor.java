@@ -21,6 +21,17 @@ public class Actor {
 		this.lastName = lastName;
 		this.films = films;
 	}
+	
+	
+
+	public Actor(int id, String firstName, String lastName) {
+		super();
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
+
+
 
 	public Actor() {
 		super();
@@ -103,8 +114,8 @@ public class Actor {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Actor [id=").append(id).append(", firstName=").append(firstName).append(", lastName=")
-				.append(lastName).append("]");
+		builder.append("Name: ").append(firstName).append(" ")
+				.append(lastName).append(" -- ID: ").append(id);
 		return builder.toString();
 	}
 

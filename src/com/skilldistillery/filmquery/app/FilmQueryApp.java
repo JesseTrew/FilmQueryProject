@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import com.skilldistillery.filmquery.database.DatabaseAccessor;
 import com.skilldistillery.filmquery.database.DatabaseAccessorObject;
+import com.skilldistillery.filmquery.entities.Actor;
 import com.skilldistillery.filmquery.entities.Film;
 
 public class FilmQueryApp {
@@ -44,10 +45,22 @@ public class FilmQueryApp {
 			System.out.println("2) Look up film by search keyword");
 			System.out.println("3) Exit application");
 			int selection = input.nextInt();
+			input.nextLine();
 			switch (selection) {
 				case 1: {
 					System.out.println("Enter film ID:");
-					System.out.println(db.findFilmById(input.nextInt()).toString());
+					int id = input.nextInt();
+
+					System.out.println(db.findFilmById(id).toString());
+					System.out.print("Language: ");
+					System.out.println(db.getLanguage(db.findFilmById(id).getLanguageId()));
+					List<Actor> actors = new ArrayList<>();
+					actors = db.findFilmById(id).getActors();
+					System.out.println("Actors: ");
+					for (Actor actor : actors) {
+						System.out.println(actor);
+					}
+					System.out.println();
 					break;
 				}
 	
@@ -56,14 +69,23 @@ public class FilmQueryApp {
 					List<Film> films = new ArrayList<>();
 					do {
 						System.out.println("Enter search keyword:");
-						films = db.findFilmByKeyword(input.nextLine());
+						String searchTerm = input.nextLine();
+						films = db.findFilmByKeyword(searchTerm);
 
 						if (films.size() == 0) {
 							System.out.println("No matches for that keyword.");
 						}else {
 							for (Film film : films) {
 								System.out.println(film.toString());
+								System.out.print("Language: ");
 								System.out.println(db.getLanguage(film.getLanguageId()));
+								List<Actor> actors = new ArrayList<>();
+								actors = film.getActors();
+								System.out.println("Actors: ");
+								for (Actor actor : actors) {
+									System.out.println(actor);
+								}
+								System.out.println();
 							}
 							keepGoing = false;
 						}
